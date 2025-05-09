@@ -1,4 +1,11 @@
 #!/usr/bin/python3
+
+# === Essential Files Before Running ===
+# Note: .gitignore is used to keep secure/sensitive files private
+
+# touch user.secret client.secret log.txt count.txt
+# echo -e "username=usernamehere\npassword=passwordhere" > login
+
 import time
 from datetime import datetime
 import os
