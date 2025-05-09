@@ -7,8 +7,8 @@ import masto
 import justirc
 
 # === CONFIG ===
-server = "irc.sageru.org" #"irc.rizon.net"
-channel = "#jp" #"#akaitestch"
+server = "irc.rizon.net" #""
+channel = "#akaitestch" #""
 nick = "botmane10000"
 user = "botmane10000"
 log = "log.txt"
