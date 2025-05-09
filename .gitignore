@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.py filter=ignoreline
+client.secret
+user.secret
+count.txt
+login
+log.txt
+
+venv/
+mastodon_env/
+
+__pycache__/
