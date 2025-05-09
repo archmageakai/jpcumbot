@@ -14,8 +14,8 @@ import masto
 import justirc
 
 # === CONFIG ===
-server = "irc.sageru.org" #"irc.rizon.net"
-channel = "#jp" #"#akaitestch"
+server = "irc.sageru.org" # "irc.rizon.net"
+channels = ["#jp", "##jp"] # "#testakai1", "#testakai2", "#testakai3"
 nick = "botmane10000"
 user = "botmane10000"
 log = "log.txt"
@@ -37,8 +37,9 @@ def on_connect(bot):
     print("Connected to server")
 
 def on_welcome(bot):
-    bot.join_channel(channel)
-    print("Joined", channel)
+    for chan in channels:
+        bot.join_channel(chan)
+        print("Joined", chan)
 
 def get_ordinal(n):
     if 10 <= n % 100 <= 20:
