@@ -81,8 +81,8 @@ def on_message(bot, channel, sender, message):
             mastodon_message = f"Anonymous has cummed for the {ordinal} time."
 
             try:
-                bot.send_message(channel, irc_message)
                 masto.mastodon.status_post(visibility="unlisted", status=mastodon_message)
+                bot.send_message(channel, irc_message)
                 write_count(count_file, count)
 
                 logger(f"{sender} said: {message}")
