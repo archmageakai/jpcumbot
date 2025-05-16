@@ -14,8 +14,8 @@ import masto
 import justirc
 
 # === CONFIG ===
-server = "irc.sageru.org" # "irc.rizon.net"
-channels = ["#jp", "##jp"] # "#testakai1", "#testakai2", "#testakai3"
+server = "irc.sageru.org" # "irc.rizon.net" "irc.sageru.org"
+channels = ["#jp", "##jp"] # "#testakai1", "#testakai2", "#testakai3" -- "#jp", "##jp"
 nick = "botmane10000"
 user = "botmane10000"
 log = "log.txt"
@@ -61,6 +61,10 @@ def write_count(filepath, count):
     with open(filepath, "w") as f:
         f.write(str(count))
 
+def logger(m):
+    with open(log, "a") as log_it:
+        log_it.write(f"{get_time()} {m}\n")
+
 def on_message(bot, channel, sender, message):
 
     global last_action_time
@@ -68,28 +72,28 @@ def on_message(bot, channel, sender, message):
 
     if now - last_action_time >= ACTION_COOLDOWN:
         if message.strip() == "cummed":
-            log_message = f"{get_time()} {sender} said: {message}\n"
-            with open(log, "a") as log_it:
-                log_it.write(log_message)
 
             count_file = "count.txt"
             count = read_count(count_file) + 1
-            write_count(count_file, count)
-
             ordinal = get_ordinal(count)
 
             irc_message = f"It has been cummed. {url}" # if want counts in IRC msg, add: for the {ordinal} time.
-            bot.send_message(channel, irc_message)
-
             mastodon_message = f"Anonymous has cummed for the {ordinal} time."
-            try:
-                masto.mastodon.status_post(visibility="unlisted", status=mastodon_message)
-            except Exception as e:
-                bot.send_message(channel, f"Error posting to Mastodon: {e}")
 
+            try:
+                bot.send_message(channel, irc_message)
+                masto.mastodon.status_post(visibility="unlisted", status=mastodon_message)
+                write_count(count_file, count)
+
+                logger(f"{sender} said: {message}")
+            except Exception as e:
+                print(f"Error posting to Mastodon: {e}")
+                logger(f"Error posting to Mastodon: {e}")
+                
             last_action_time = now
     else:
         print("Cooldown in effect.")
+        logger("Cooldown in effect.")
 
 """
 def check_mentions(bot, channel):
