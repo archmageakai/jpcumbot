@@ -87,8 +87,9 @@ def on_message(bot, channel, sender, message):
 
                 logger(f"{sender} said: {message}")
             except Exception as e:
-                print(f"Error posting to Mastodon: {e}")
-                logger(f"Error posting to Mastodon: {e}")
+                error_msg = f"Error during action block: {type(e).__name__} - {e}"
+                print(error_msg)
+                logger(error_msg)
                 
             last_action_time = now
     else:
